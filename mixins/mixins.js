@@ -28,8 +28,8 @@ new Promise((resolve, reject) => {
           console.log('ERROR REDIS 10%', err)
           reject(err);
         }
+        this.getData(latitude, longitude);
       });
-      throw new Error('How unfortunate! The API Request Failed')
     }
     resolve(data.data);
   })
