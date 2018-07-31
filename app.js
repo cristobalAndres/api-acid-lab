@@ -15,9 +15,11 @@ app.use(function (req, res, next) {
 
 app.get('/', function (req, res) {
   let citiesData = [];
+  // Obtención de la información delas ciudades guardadas
   mixins.cities()
   .then((data) => {
     citiesData = JSON.parse(data);
+    // Recorrido de las ciudades y consultar al servicio sobre temperatura y hora de la ciudad solicitada
     const promises = citiesData.map(city => mixins.getData(city.latitude, city.longitude));
     return Promise.all(promises);
   })
@@ -31,5 +33,5 @@ app.get('/', function (req, res) {
 });
 
 app.listen(port, function () {
-  console.log('Example app listening on port 8000!');
+  console.log('Servidor levantado :)');
 });
