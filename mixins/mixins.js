@@ -20,7 +20,7 @@ new Promise((resolve, reject) => {
 
 exports.getData = (latitude, longitude) =>
 new Promise((resolve, reject) => {
-  axios.get(`https://api.darksky.net/forecast/f10982b071e63f1138f7133a2ce7a9a9/${latitude},${longitude}?units=si&lang=es&exclude=minutely,hourly,daily,alerts,flags`)
+  axios.get(`https://api.darksky.net/forecast/a553a3db54fe76d9dec2fc364a8c849f/${latitude},${longitude}?units=si&lang=es&exclude=minutely,hourly,daily,alerts,flags`)
   .then((data) => {
     if (Math.random(0, 1) < 0.1) {
       redisClient.hset(["api.errors", Date.now(), 'Error 10%'], (err, data) => {
