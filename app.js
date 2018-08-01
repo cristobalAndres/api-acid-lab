@@ -1,14 +1,17 @@
 const express = require('express');
 var assert = require('assert');
 const app = express();
+const http = require("http")
 require('dotenv').config();
-
-const WebSocketServer = require('ws').Server,
-  wss = new WebSocketServer({port: 3000})
-
+const port = process.env.PORT || 8000;
 const mixins = require('./mixins/mixins');
 
-const port = process.env.PORT || 8000;
+const server = http.createServer(app)
+
+const WebSocketServer = require('ws').Server,
+  wss = new WebSocketServer({server: server})
+
+console.log("http server listening on %d", port);
 
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -58,6 +61,4 @@ wss.on('connection', function (ws) {
   }, 1000)
 })
 
-app.listen(port, function () {
-  console.log('Servidor levantado :) !');
-});
+server.listen(port)
