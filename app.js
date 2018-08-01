@@ -4,7 +4,7 @@ const app = express();
 require('dotenv').config();
 
 const WebSocketServer = require('ws').Server,
-  wss = new WebSocketServer({port: 40510})
+  wss = new WebSocketServer({port: 3000})
 
 const mixins = require('./mixins/mixins');
 
