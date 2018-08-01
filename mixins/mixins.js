@@ -8,6 +8,27 @@ redisClient.on('error', (err) => {
   console.log('ERROR REDIS', err);
 });
 
+exports.initData = () => {
+  return new Promise((resolve, reject) => {
+    let citiesData = [];
+    // Obtención de la información delas ciudades guardadas
+    this.cities()
+    .then((data) => {
+      citiesData = JSON.parse(data);
+      // Recorrido de las ciudades y consultar al servicio sobre temperatura y hora de la ciudad solicitada
+      const promises = citiesData.map(city => this.getData(city.latitude, city.longitude));
+      return Promise.all(promises);
+    })
+    .then((data) => {
+      resolve(data);
+    })
+    .catch((err) => {
+      console.log(err);
+      reject(err);
+    })
+  })
+}
+
 // Busqueda de información de las ciudades guardadas en redis
 exports.cities = () =>
 new Promise((resolve, reject) => {
