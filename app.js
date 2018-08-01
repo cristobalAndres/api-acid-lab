@@ -51,14 +51,19 @@ wss.on('connection', function (ws) {
   //   })),
   //   1000
   // )
-  setInterval(() => {
+  const id = setInterval(() => {
     mixins.initData().then((data) => {
       ws.send(JSON.stringify(data));
     })
     .catch((error) => {
       console.log('ERRROR', error);
     });
-  }, 1000)
+  }, 10000);
+
+  ws.on("close", function() {
+    console.log("websocket connection close")
+    clearInterval(id)
+  })
 })
 
 server.listen(port)
